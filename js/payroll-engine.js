@@ -24,9 +24,9 @@ class PayrollEngine {
         const taxableIncome = totalPayment - nonTaxableIncome;
 
         // 2. 공제 항목 묶음 계산 (4대보험 및 세금)
-        const nps = Math.floor((taxableIncome * 0.045) / 10) * 10;        // 국민연금 (4.5%)
-        const nhis = Math.floor((taxableIncome * 0.03545) / 10) * 10;     // 건강보험 (3.545%)
-        const ltci = Math.floor((nhis * 0.1295) / 10) * 10;               // 장기요양보험 (건강보험의 12.95%)
+        const nps = Math.floor((taxableIncome * 0.0475) / 10) * 10;        // 국민연금 (4.75%)
+        const nhis = Math.floor((taxableIncome * 0.03595) / 10) * 10;     // 건강보험 (3.595%)
+        const ltci = Math.floor((nhis * 0.1314) / 10) * 10;               // 장기요양보험 (건강보험의 13.14%)
         const ei = Math.floor((taxableIncome * 0.009) / 10) * 10;         // 고용보험 (0.9%)
         
         // 소득세 및 지방소득세 간이 계산
