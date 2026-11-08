@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  const key='treePayrollSettingsV1';let settings={...defaults};try{settings={...settings,...JSON.parse(localStorage.getItem(key)||'{}')}}catch{}
  const engine=new PayrollEngine(settings);let workbook=null,workers=[],calculated=false;
  const $=id=>document.getElementById(id),tbody=$('payroll-tbody'),preview=$('excel-preview-container'),sheet=$('excel-sheet-select');
- let newRowCount=0;\n const num=v=>{const n=Number(String(v??0).replace(/[,₩원\s]/g,''));return Number.isFinite(n)?n:0},fmt=v=>Math.round(num(v)).toLocaleString('ko-KR');
+ const num=v=>{const n=Number(String(v??0).replace(/[,₩원\s]/g,''));return Number.isFinite(n)?n:0},fmt=v=>Math.round(num(v)).toLocaleString('ko-KR');
  document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-selected',String(x===b))});document.querySelectorAll('.tab-content').forEach(x=>x.classList.toggle('active',x.id===b.dataset.target))}));
  function sync(){document.querySelectorAll('[data-setting]').forEach(i=>i.value=settings[i.dataset.setting])}sync();
  $('btn-save-settings').addEventListener('click',()=>{const next={...settings};for(const i of document.querySelectorAll('[data-setting]')){const v=Number(i.value);if(!Number.isFinite(v)||v<0||v>100&&/Rate$/.test(i.dataset.setting))return alert('설정값은 0 이상이어야 하며 요율은 100% 이하여야 합니다.');next[i.dataset.setting]=v}settings=next;localStorage.setItem(key,JSON.stringify(settings));engine.updateRules(settings);if(calculated)calculate(false);alert('계산 설정을 저장했습니다.')});
