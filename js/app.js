@@ -34,7 +34,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   const link=document.querySelector('link[rel="stylesheet"]');
   if(link){
     try{const res=await fetch(link.href);if(res.ok){const style=document.createElement('style');style.textContent=await res.text();clone.querySelector('link[rel="stylesheet"]')?.replaceWith(style)}}
-    catch(_){/* Keep the original stylesheet URL as a fallback; a CSS fetch failure must not block saving. */}
+    catch(_){
+      try{
+        const sheet=Array.from(document.styleSheets).find(s=>s.href===link.href);
+        const rules=sheet?Array.from(sheet.cssRules).map(rule=>rule.cssText).join('\\n'):'';
+        if(rules){const style=document.createElement('style');style.textContent=rules;clone.querySelector('link[rel="stylesheet"]')?.replaceWith(style)}
+      }catch(__){/* Preserve the link as a last-resort fallback; saving must continue. */}
+    }
   }
   // Keep the snapshot self-contained as a view; no scripts are needed to display its captured table.
   clone.querySelectorAll('script').forEach(s=>s.remove());
