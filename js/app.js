@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
                    , nhisRate: 3.595
                    , ltciRate: 13.14
                    , eiRate: .9
-                   , incomeTaxRate: 3
+                   , incomeTaxRate: 3.3
                    , localIncomeTaxRate: 10 
                   };
 
