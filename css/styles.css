@@ -208,7 +208,7 @@ body {
     color: #394156;
     padding: 10px 15px;
     border-radius: 7px;
-    font-size: 12px;
+    font-size: .6em;
     font-weight: 700;
     cursor: pointer
 }
